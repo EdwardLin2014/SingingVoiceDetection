@@ -58,7 +58,7 @@ for t = 1:numMusics
     tic
     trueVoice = gpuArray(x(:,2));
     estimatedVoice = gpuArray(Voice.y);
-    [SDR, SIR, SAR] = bss_eval_sdr(estimatedVoice', trueVoice');
+    [SDR, SIR, SAR] = bss_eval_1source(estimatedVoice', trueVoice');
     BSS(t,1) = gather(SDR);
     BSS(t,2) = gather(SIR);
     BSS(t,3) = gather(SAR);
