@@ -70,7 +70,7 @@ for t = 1:numMusics
     fprintf('Classify Sinusoidal Partials need %.2f sec\n', toc);
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %% Step 5 - iSTFT
+    %% Step 5 - iSTFT/AddSynth
     tic
     mV = PartialsToBinaryMask( Voice.Partials, Parm ) .* Mix.mX;
     mV(mV<eps) = eps;
@@ -97,7 +97,7 @@ for t = 1:numMusics
     Song.IBMPeakSiney = sineSynth( mSdB, pS, Song.PMask, Parm );
     Song.IBMPeakSiney = resample( Song.IBMPeakSiney,2,1 );
     Song.IBMPeakSiney = scaleAudio( Song.IBMPeakSiney, MinAmp, MaxAmp );
-    fprintf('Computing iSTFT need %.2f sec\n', toc);
+    fprintf('Computing iSTFT/AddSynth need %.2f sec\n', toc);
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Step 6 - genSound
@@ -105,13 +105,13 @@ for t = 1:numMusics
     if t <= 137
         audiowrite([AudioOutDirStr, '/MQ_iSTFT_1024_4096_256_42_20_4/',num2str(t),'_Voice_',WavFileDirs{t}(end-14:end)], Voice.IBMPeaky, fs );
         audiowrite([AudioOutDirStr, '/MQ_iSTFT_1024_4096_256_42_20_4/',num2str(t),'_Song_',WavFileDirs{t}(end-14:end)], Song.IBMPeaky, fs );
-        audiowrite([AudioOutDirStr, '/MQ_AS_1024_4096_256_42_20_4/',num2str(t),'_Voice_',WavFileDirs{t}(end-14:end)], Voice.IBMPeaky, fs );
-        audiowrite([AudioOutDirStr, '/MQ_AS_1024_4096_256_42_20_4/',num2str(t),'_Song_',WavFileDirs{t}(end-14:end)], Song.IBMPeaky, fs );
+        audiowrite([AudioOutDirStr, '/MQ_AS_1024_4096_256_42_20_4/',num2str(t),'_Voice_',WavFileDirs{t}(end-14:end)], Voice.IBMPeakSiney, fs );
+        audiowrite([AudioOutDirStr, '/MQ_AS_1024_4096_256_42_20_4/',num2str(t),'_Song_',WavFileDirs{t}(end-14:end)], Song.IBMPeakSiney, fs );
     else
         audiowrite([AudioOutDirStr, '/MQ_iSTFT_1024_4096_256_42_20_4/',num2str(t),'_Voice_',WavFileDirs{t}(end-15:end)], Voice.IBMPeaky, fs );
         audiowrite([AudioOutDirStr, '/MQ_iSTFT_1024_4096_256_42_20_4/',num2str(t),'_Song_',WavFileDirs{t}(end-15:end)], Song.IBMPeaky, fs );
-        audiowrite([AudioOutDirStr, '/MQ_AS_1024_4096_256_42_20_4/',num2str(t),'_Voice_',WavFileDirs{t}(end-15:end)], Voice.IBMPeaky, fs );
-        audiowrite([AudioOutDirStr, '/MQ_AS_1024_4096_256_42_20_4/',num2str(t),'_Song_',WavFileDirs{t}(end-15:end)], Song.IBMPeaky, fs );
+        audiowrite([AudioOutDirStr, '/MQ_AS_1024_4096_256_42_20_4/',num2str(t),'_Voice_',WavFileDirs{t}(end-15:end)], Voice.IBMPeakSiney, fs );
+        audiowrite([AudioOutDirStr, '/MQ_AS_1024_4096_256_42_20_4/',num2str(t),'_Song_',WavFileDirs{t}(end-15:end)], Song.IBMPeakSiney, fs );
     end
     fprintf('genSound needs %.2f sec\n', toc);
     fprintf('=================================================\n');    
